@@ -1,0 +1,6 @@
+authors = ["C. Naaktgeboren <NaaktgeborenC.PhD@gmail.com>"]
+name = "IsoOrthoTensor"
+uuid = "6490f2a6-240f-11e9-09ef-012bde3e15db"
+version = "0.1.0"
+
+[deps]

@@ -39,22 +39,44 @@ export K, i𝕔, 𝕔, Δ
 
 
 #------------------------------------------------------------------------------#
+#                                 Union Types                                  #
+#------------------------------------------------------------------------------#
+
+Tensor{T} = Union{T,Array{T}}
+
+
+#------------------------------------------------------------------------------#
+#                                  Constants                                   #
+#------------------------------------------------------------------------------#
+
+const δ::NTuple{3,Tensor{Int64}} = (1, [[1 0];[0 1]], [[1 0 0];[0 1 0];[0 0 1]])
+
+
+#------------------------------------------------------------------------------#
 #                             Auxiliary Functions                              #
 #------------------------------------------------------------------------------#
 
 """
-    K(D::Int64 = 2)::Union{Int64,Array{Int64,2}}
+    fK(D::Int64 = 2)::Tensor{Int64}
 
-Returns the Kronecker Delta tensor in a `D`-dimensional Euclidean space.
+Fast (no ckecks)`Int64` Kronecker δ tensor in a `D`-dimensional Euclidean space,
+`D ∈ [1, 3]`.
 """
-function K(D::Int64 = 2)::Union{Int64,Array{Int64,2}}
-    # Validation
-    if D <= 0 || D >= 4
-        throw(DomainError("dimension D = $D outside the valid domain [1; 3]"))
-    end
-    # Execution
-    return D == 1 ? 1 : D == 2 ? [[1 0]; [0 1]] : [[1 0 0]; [0 1 0]; [0 0 1]]
+fK(D::Int64 = 2)::Tensor{Int64} = δ[D]
+
+
+"""
+    K(D::Int64 = 2)::Tensor{Int64}
+
+Returns the  Kronecker  Delta  tensor  in  a  `D`-dimensional  Euclidean  space,
+checking bounds on `D`, i.e., whether `D ∈ [1, 3].`
+"""
+function K(D::Int64 = 2)::Tensor{Int64}
+    D <= 0 || D >= 4 ?
+        throw(DomainError("dimension D = $D outside the valid domain [1, 3]")) :
+        fK(D)
 end
+
 
 """
 # Description
@@ -166,10 +188,10 @@ end
 # Description
 
     function 𝕔(
-        OPS::Tuple{Vararg{Array{Int64,2},N}} where N,
+        OPS::Tuple{Vararg{Tensor{Int64},N}} where N
         FID::Tuple{Vararg{Int64,N}} where N;
         D::Int64 = 2
-    )::Array{Int64,N} where N # 𝕔: U+1d554
+    )::Tensor{Int64} # 𝕔: U+1d554
 
 Performs  a  combinatorial  type  of  nonstandard  tensor  product  between  the
 operands, which are elements of the `OPS` `Tuple`,  keeping  the  indices  `FID`
@@ -231,10 +253,10 @@ Lattice-Boltzmann Stencils,” The Scientific World Journal, vol. 2014, article 
 142907, 16 pages, 2014.
 """
 function 𝕔(
-    OPS::Tuple{Vararg{Array{Int64,2},N}} where N,
+    OPS::Tuple{Vararg{Tensor{Int64},N}} where N,
     FID::Tuple{Vararg{Int64,N}} where N;
     D::Int64 = 2
-)::Array{Int64} # 𝕔: U+1d554
+)::Tensor{Int64} # 𝕔: U+1d554
     OPD = Tuple(ndims(A) for A in OPS) # OPerand Dimensions
     RED = sum(OPD) # REsult Dimensions
     RET = fill(zero(OPS[1][1]), Tuple(D for i in 1:RED)) # RETurn tensor
@@ -259,7 +281,29 @@ end
 #                                User Functions                                #
 #------------------------------------------------------------------------------#
 
-function Δ()
+"""
+# Description
+
+    Δ(n::Int64; D::Int64 = 2)::Tensor{Int64}
+
+Computes and returns an `n`-th order Isotropic Tensor (of `Int64` components) in
+a `D`-dimensional Euclidean space, checking bounds on `D`, i.e.,  whether  `D  ∈
+[1, 3]`, and on `n`, i.e., whether `n ∈ [0, ∞)`.
+"""
+function Δ(n::Int64; D::Int64 = 2)::Tensor{Int64}
+    # Validation
+    if D <= 0 || D >= 4
+        throw(DomainError("dimension D = $D outside the valid domain [1, 3]"))
+    elseif n < 0
+        throw(DomainError("order n = $n outside the valid domain [0, ∞)"))
+        # ∞: U+221e
+    end
+    # Execution
+    if D == 1 || n == 0
+        return 1
+    else
+        return n == 1 ? δ[D] : 𝕔((δ[D], Δ(n-1, D = D)), (1,), D = D)
+    end
 end
 
 

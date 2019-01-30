@@ -21,8 +21,6 @@ julia> typeof(IOT.iso)
 Module
 
 ```
-
-
 """
 module iso
 
@@ -48,7 +46,6 @@ export K, i𝕔, 𝕔, Δ
     K(D::Int64 = 2)::Union{Int64,Array{Int64,2}}
 
 Returns the Kronecker Delta tensor in a `D`-dimensional Euclidean space.
-
 """
 function K(D::Int64 = 2)::Union{Int64,Array{Int64,2}}
     # Validation

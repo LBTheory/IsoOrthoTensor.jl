@@ -30,16 +30,18 @@ module IOT
 #                                   Imports                                    #
 #------------------------------------------------------------------------------#
 
+using Reexport
+
 
 #------------------------------------------------------------------------------#
 #                                   Includes                                   #
 #------------------------------------------------------------------------------#
 
 include("iso.jl")
-import .iso     # Never do "using .iso" to avoid namespace pollution
+@reexport using .iso
 
-include("orθ.jl")   # θ: U+3b8
-import .orθ     # Never do "using .orθ" to avoid namespace pollution
+#include("orθ.jl")   # θ: U+3b8
+#@reexport using .orθ
 
 
 #------------------------------------------------------------------------------#

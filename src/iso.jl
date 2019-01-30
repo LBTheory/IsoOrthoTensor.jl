@@ -20,31 +20,12 @@ julia> using IsoOrthoTensor
 julia> typeof(IOT.iso)
 Module
 
-julia> i𝕔((2, 2), (1,))
-3-element Array{Tuple{Vararg{Int64,N}} where N,1}:
- (1, 2, 3, 4)
- (1, 3, 2, 4)
- (1, 4, 2, 3)
+julia> Δ(1) # Δ: U+394
+2×2 Array{Int64,2}:
+ 1  0
+ 0  1
 
-julia> 𝕔((K(2), K(2)), ())
-2×2×2×2 Array{Int64,4}:
-[:, :, 1, 1] =
- 6  0
- 0  2
-
-[:, :, 2, 1] =
- 0  2
- 2  0
-
-[:, :, 1, 2] =
- 0  2
- 2  0
-
-[:, :, 2, 2] =
- 2  0
- 0  6
-
-julia> Δ(2)
+julia> Δ(2) # Δ: U+394
 2×2×2×2 Array{Int64,4}:
 [:, :, 1, 1] =
  3  0
@@ -174,7 +155,7 @@ summation of `3 choose 1 = 3` products between the operands:
 ```julia-repl
 julia> using IsoOrthoTensor
 
-julia> i𝕔((2, 2), (1,))
+julia> i𝕔((2, 2), (1,)) # 𝕔: U+1d554
 3-element Array{Tuple{Vararg{Int64,N}} where N,1}:
  (1, 2, 3, 4)
  (1, 3, 2, 4)
@@ -188,7 +169,7 @@ the first and sixth indices fixed: arguments `(2, 2, 2)` and  `(1,  6)`  to  the
 between the operands:
 
 ```julia-repl
-julia> i𝕔((2, 2, 2), (1, 6))
+julia> i𝕔((2, 2, 2), (1, 6)) # 𝕔: U+1d554
 12-element Array{Tuple{Vararg{Int64,N}} where N,1}:
  (1, 2, 3, 4, 5, 6)
  (1, 2, 3, 5, 4, 6)
@@ -246,6 +227,7 @@ function i𝕔(
     end
 end
 
+
 """
 # Description
 
@@ -282,28 +264,23 @@ in which terms combine the three free indices  `βγε`  while  keeping  the  fi
 index `α` fixed.
 
 ```julia-repl
-julia> δ = K(2)
-2×2 Array{Int64,2}:
- 1  0
- 0  1
-
-julia> 𝕔((δ, δ), (1,))
+julia> 𝕔((K(2), K(2)), ()) # 𝕔: U+1d554
 2×2×2×2 Array{Int64,4}:
 [:, :, 1, 1] =
- 3  0
- 0  1
+ 6  0
+ 0  2
 
 [:, :, 2, 1] =
- 0  1
- 1  0
+ 0  2
+ 2  0
 
 [:, :, 1, 2] =
- 0  1
- 1  0
+ 0  2
+ 2  0
 
 [:, :, 2, 2] =
- 1  0
- 0  3
+ 2  0
+ 0  6
 
 ```
 
@@ -346,13 +323,39 @@ end
 """
 # Description
 
-    Δ(n::Int64; D::Int64 = 2)::Tensor{Int64}
+    Δ(n::Int64; D::Int64 = 2)::Tensor{Int64} # Δ: U+394
 
 Computes and returns an `n`-th order Isotropic Tensor (of `Int64` components) in
 a `D`-dimensional Euclidean space, checking bounds on `D`, i.e.,  whether  `D  ∈
 [1, 3]`, and on `n`, i.e., whether `n ∈ [0, ∞)`.
+
+```julia-repl
+julia> Δ(1) # Δ: U+394
+2×2 Array{Int64,2}:
+ 1  0
+ 0  1
+
+julia> Δ(2) # Δ: U+394
+2×2×2×2 Array{Int64,4}:
+[:, :, 1, 1] =
+ 3  0
+ 0  1
+
+[:, :, 2, 1] =
+ 0  1
+ 1  0
+
+[:, :, 1, 2] =
+ 0  1
+ 1  0
+
+[:, :, 2, 2] =
+ 1  0
+ 0  3
+
+```
 """
-function Δ(n::Int64; D::Int64 = 2)::Tensor{Int64}
+function Δ(n::Int64; D::Int64 = 2)::Tensor{Int64} # Δ: U+394
     # Validation
     if D <= 0 || D >= 4
         throw(DomainError("dimension D = $D outside the valid domain [1, 3]"))

@@ -165,7 +165,96 @@ function i𝕔(
     end
 end
 
-function 𝕔()
+"""
+# Description
+
+    function 𝕔(
+        OPS::Tuple{Vararg{Array{Int64,2},N}} where N,
+        FID::Tuple{Vararg{Int64,N}} where N;
+        D::Int64 = 2
+    )::Array{Int64,N} where N # 𝕔: U+1d554
+
+Performs  a  combinatorial  type  of  nonstandard  tensor  product  between  the
+operands, which are elements of the `OPS` `Tuple`,  keeping  the  indices  `FID`
+fixed in a `D`-dimensional Euclidean space, and returns  the  resulting  tensor.
+The combinatorial nonstandard tensor product performed is  referred  to  by  the
+'⊛': Unicode U+229b symbol in some Lattice Boltzmann theory literature, as [1].
+
+`OPS` is an NTuple containing the operand tensors, like `(δ, δ)`  —  a  pair  of
+Kronecker-delta tensors stored in the temporary `δ` identifier.
+
+`FID` is an NTuple containing the fixed indices, i.e., indices that take a fixed
+position in all terms, like (1,), indicating that the first index is kept  fixed
+in all summation terms.
+
+`D` is the dimensionality of the Euclidean space in which  the  tensor  operands
+apply.
+
+# Usage
+
+Calculate the `𝝙⁽ⁿ⁾` tensor of order `2n` that is isotropic with respect to  all
+of its `2n` indices [1] with `n=2` through the nonstandard product
+
+    Δ⁽²⁾αβγε = δαβ*δγε + δαγ*δβε + δαε*δβγ,
+
+in which terms combine the three free indices  `βγε`  while  keeping  the  first
+index `α` fixed.
+
+```julia-repl
+julia> δ = K(2)
+2×2 Array{Int64,2}:
+ 1  0
+ 0  1
+
+julia> 𝕔((δ, δ), (1,))
+2×2×2×2 Array{Int64,4}:
+[:, :, 1, 1] =
+ 3  0
+ 0  1
+
+[:, :, 2, 1] =
+ 0  1
+ 1  0
+
+[:, :, 1, 2] =
+ 0  1
+ 1  0
+
+[:, :, 2, 2] =
+ 1  0
+ 0  3
+
+```
+
+# References
+
+[1]: K. K.  Mattila,  L.  A.  Hegele  Júnior,  P.  C.  Philippi,  “High-Accuracy
+Approximation of High-Rank Derivatives: Isotropic Finite  Differences  Based  of
+Lattice-Boltzmann Stencils,” The Scientific World Journal, vol. 2014, article ID
+142907, 16 pages, 2014.
+"""
+function 𝕔(
+    OPS::Tuple{Vararg{Array{Int64,2},N}} where N,
+    FID::Tuple{Vararg{Int64,N}} where N;
+    D::Int64 = 2
+)::Array{Int64} # 𝕔: U+1d554
+    OPD = Tuple(ndims(A) for A in OPS) # OPerand Dimensions
+    RED = sum(OPD) # REsult Dimensions
+    RET = fill(zero(OPS[1][1]), Tuple(D for i in 1:RED)) # RETurn tensor
+    ONE = one(OPS[1][1])
+    for idx in Base.product(fill(1:D, RED)...) # Return tensor index
+        for IDP in i𝕔(OPD, FID) # InDex Permutations
+            PID = [idx[perm] for perm in IDP] # Permuted InDices
+            prod, BEG = ONE, 1
+            for fact in OPS
+                SIZ = ndims(fact)
+                prod *= fact[PID[BEG:BEG-1+SIZ]...]
+                BEG += SIZ
+            end
+            RET[idx...] += prod
+        end
+    end
+    return RET
 end
 
 

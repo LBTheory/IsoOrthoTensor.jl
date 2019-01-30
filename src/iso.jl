@@ -20,6 +20,48 @@ julia> using IsoOrthoTensor
 julia> typeof(IOT.iso)
 Module
 
+julia> i𝕔((2, 2), (1,))
+3-element Array{Tuple{Vararg{Int64,N}} where N,1}:
+ (1, 2, 3, 4)
+ (1, 3, 2, 4)
+ (1, 4, 2, 3)
+
+julia> 𝕔((K(2), K(2)), ())
+2×2×2×2 Array{Int64,4}:
+[:, :, 1, 1] =
+ 6  0
+ 0  2
+
+[:, :, 2, 1] =
+ 0  2
+ 2  0
+
+[:, :, 1, 2] =
+ 0  2
+ 2  0
+
+[:, :, 2, 2] =
+ 2  0
+ 0  6
+
+julia> Δ(2)
+2×2×2×2 Array{Int64,4}:
+[:, :, 1, 1] =
+ 3  0
+ 0  1
+
+[:, :, 2, 1] =
+ 0  1
+ 1  0
+
+[:, :, 1, 2] =
+ 0  1
+ 1  0
+
+[:, :, 2, 2] =
+ 1  0
+ 0  3
+
 ```
 """
 module iso
@@ -49,7 +91,7 @@ Tensor{T} = Union{T,Array{T}}
 #                                  Constants                                   #
 #------------------------------------------------------------------------------#
 
-const δ::NTuple{3,Tensor{Int64}} = (1, [[1 0];[0 1]], [[1 0 0];[0 1 0];[0 0 1]])
+const δ = (1, [[1 0];[0 1]], [[1 0 0];[0 1 0];[0 0 1]])
 
 
 #------------------------------------------------------------------------------#
@@ -59,8 +101,19 @@ const δ::NTuple{3,Tensor{Int64}} = (1, [[1 0];[0 1]], [[1 0 0];[0 1 0];[0 0 1]]
 """
     fK(D::Int64 = 2)::Tensor{Int64}
 
-Fast (no ckecks)`Int64` Kronecker δ tensor in a `D`-dimensional Euclidean space,
-`D ∈ [1, 3]`.
+Fast (no ckecks) `Int64` Kronecker  δ  tensor  in  a  `D`-dimensional  Euclidean
+space, `D ∈ [1, 3]`.
+
+This function is not exported and must be called from outside the module with  a
+fully qualified name:
+
+```julia-repl
+julia> IOT.iso.fK(2)
+2×2 Array{Int64,2}:
+ 1  0
+ 0  1
+
+```
 """
 fK(D::Int64 = 2)::Tensor{Int64} = δ[D]
 
@@ -70,6 +123,15 @@ fK(D::Int64 = 2)::Tensor{Int64} = δ[D]
 
 Returns the  Kronecker  Delta  tensor  in  a  `D`-dimensional  Euclidean  space,
 checking bounds on `D`, i.e., whether `D ∈ [1, 3].`
+
+```julia-repl
+julia> K(3)
+3×3 Array{Int64,2}:
+ 1  0  0
+ 0  1  0
+ 0  0  1
+
+```
 """
 function K(D::Int64 = 2)::Tensor{Int64}
     D <= 0 || D >= 4 ?

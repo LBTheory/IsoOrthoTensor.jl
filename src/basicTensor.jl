@@ -28,8 +28,8 @@ module basicTensor
 #                                   Exports                                    #
 #------------------------------------------------------------------------------#
 
-# basic Tensor Union type
-export Tensor{T}
+# Basic Tensor Union type
+export Tensor
 
 # Kronecker delta tensor in 1 to 3 Euclidean dimensions, fast and safe versions
 export fK, K
@@ -46,7 +46,7 @@ Tensor{T} = Union{T,Array{T}}
 #                                  Constants                                   #
 #------------------------------------------------------------------------------#
 
-const δ = (1, [[1 0];[0 1]], [[1 0 0];[0 1 0];[0 0 1]])
+const δ = (1, [[1 0]; [0 1]], [[1 0 0]; [0 1 0]; [0 0 1]])
 
 
 #------------------------------------------------------------------------------#

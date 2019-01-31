@@ -51,7 +51,8 @@ module iso
 #                                   Imports                                    #
 #------------------------------------------------------------------------------#
 
-import .basicTensor
+include("basicTensor.jl")
+using .basicTensor
 
 import Combinatorics
 
@@ -238,7 +239,7 @@ Lattice-Boltzmann Stencils,” The Scientific World Journal, vol. 2014, article 
 142907, 16 pages, 2014.
 """
 function 𝕔(
-    OPS::Tuple{Vararg{Tensor{Int64},N}} where N,
+    OPS::Tuple{Vararg{Array{Int64},N}} where N,
     FID::Tuple{Vararg{Int64,N}} where N;
     D::Int64 = 2
 )::Tensor{Int64} # 𝕔: U+1d554

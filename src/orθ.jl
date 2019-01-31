@@ -29,7 +29,8 @@ module orθ
 #                                   Imports                                    #
 #------------------------------------------------------------------------------#
 
-import .basicTensor
+include("basicTensor.jl")
+using .basicTensor
 
 import Combinatorics
 

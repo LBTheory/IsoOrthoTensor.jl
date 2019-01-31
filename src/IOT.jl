@@ -37,6 +37,9 @@ using Reexport
 #                                   Includes                                   #
 #------------------------------------------------------------------------------#
 
+include("basicTensor.jl")
+@reexport using .basicTensor
+
 include("iso.jl")
 @reexport using .iso
 

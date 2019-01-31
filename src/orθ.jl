@@ -248,7 +248,10 @@ function Ο(n::Int64; D::Int64 = 2)::Tensor{Int64} # Ο: U+39f
 end
 
 
-#Alias
+"""
+Function O (Capital Latin Letter O) is an alias of the Ο (Capital  Greek  Letter
+Omicron): U+39f. For help, see the Ο (omicron) function documentation: ?Ο
+"""
 O = Ο # Capital o = Capital omicron
 
 

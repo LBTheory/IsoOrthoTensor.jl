@@ -239,7 +239,7 @@ function Ο(n::Int64; D::Int64 = 2)::Tensor{Int64} # Ο: U+39f
             return δ[D]
         else
             return 𝕡(
-                Tuple(repeat([δ[D]], n)),
+                Tuple(repeat([K(D)], n)),
                 Tuple([i for i in 1:2:2n]),
                 D = D
             )

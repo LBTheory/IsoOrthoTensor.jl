@@ -314,7 +314,7 @@ function Δ(n::Int64; D::Int64 = 2)::Tensor{Int64} # Δ: U+394
     if D == 1 || n == 0
         return 1
     else
-        return n == 1 ? δ[D] : 𝕔((δ[D], Δ(n-1, D = D)), (1,), D = D)
+        return n == 1 ? K(D) : 𝕔((K(D), Δ(n-1, D = D)), (1,), D = D)
     end
 end
 

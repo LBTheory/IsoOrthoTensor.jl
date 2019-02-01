@@ -241,6 +241,8 @@ end
 """
 # Description
 
+The function name is the Capital Greek Omicron Letter, Ο: U+39f.
+
     Ο(n::Int64; D::Int64 = 2)::Tensor{Int64} # Ο: U+39f
 
 Computes  and  returns  an  `n`-th  order  Orthogonality  Tensor   (of   `Int64`
@@ -248,10 +250,29 @@ components) in a `D`-dimensional Euclidean space, checking bounds on `D`,  i.e.,
 whether `D ∈ [1, 3]`, and on `n`, i.e., whether `n ∈ [0, ∞)`.
 
 ```julia-repl
-julia> Ο(1) # Ο: U+39f
-2×2 Array{Int64,2}:
- 1  0
+julia> Ο(1, D = 3) # Ο: U+39f
+3×3 Array{Int64,2}:
+ 1  0  0
+ 0  1  0
+ 0  0  1
+
+julia> Ο(2, D = 2) # Ο: U+39f
+2×2×2×2 Array{Int64,4}:
+[:, :, 1, 1] =
+ 2  0
  0  1
+
+[:, :, 2, 1] =
+ 0  1
+ 0  0
+
+[:, :, 1, 2] =
+ 0  0
+ 1  0
+
+[:, :, 2, 2] =
+ 1  0
+ 0  2
 
 ```
 """

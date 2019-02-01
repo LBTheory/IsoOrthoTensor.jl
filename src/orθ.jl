@@ -20,6 +20,30 @@ julia> using IsoOrthoTensor
 julia> typeof(IOT.orθ)
 Module
 
+julia> Ο(1, D = 3) # Ο: U+39f
+3×3 Array{Int64,2}:
+ 1  0  0
+ 0  1  0
+ 0  0  1
+
+julia> Ο(2, D = 2) # Ο: U+39f
+2×2×2×2 Array{Int64,4}:
+[:, :, 1, 1] =
+ 2  0
+ 0  1
+
+[:, :, 2, 1] =
+ 0  1
+ 0  0
+
+[:, :, 1, 2] =
+ 0  0
+ 1  0
+
+[:, :, 2, 2] =
+ 1  0
+ 0  2
+
 ```
 """
 module orθ
@@ -57,8 +81,8 @@ export i𝕡, 𝕡, Ο, O
 
 Returns a one-dimensional array with tensor index permutations (as NTuples) that
 encode summation terms for a permutatorial type of nonstandard  tensor  product,
-referred to by a  nesting  the  '⊛':  Unicode  U+229b  symbol  in  some  Lattice
-Boltzmann theory literature, as [1].
+referred to by a particular nesting of the '⊛': Unicode U+229b  symbol  in  some
+Lattice Boltzmann theory literature, as [1].
 
 `OPD` is an NTuple containing the operand dimensions, like (2, 2),  and  has  as
 many elements as there are operands in the  permutatorial  type  of  nonstandard
@@ -80,6 +104,11 @@ function — a summation of `2! = 2` products between the operands:
 ```julia-repl
 julia> using IsoOrthoTensor
 
+julia> i𝕡((2, 2), (1, 3))
+2-element Array{Tuple{Vararg{Int64,N}} where N,1}:
+ (1, 2, 3, 4)
+ (1, 4, 3, 2)
+
 ```
 
 Nonstandard permutatorial tensor product between three rank-2  tensors,  keeping
@@ -87,6 +116,15 @@ the first index of each one fixed: arguments `(2, 2, 2)` and `(1, 3, 5)` to  the
 `i𝕡` function — a summation of `3! = 6` products between the operands:
 
 ```julia-repl
+julia> i𝕡((2, 2, 2), (1, 3, 5))
+6-element Array{Tuple{Vararg{Int64,N}} where N,1}:
+ (1, 2, 3, 4, 5, 6)
+ (1, 2, 3, 6, 5, 4)
+ (1, 4, 3, 2, 5, 6)
+ (1, 4, 3, 6, 5, 2)
+ (1, 6, 3, 2, 5, 4)
+ (1, 6, 3, 4, 5, 2)
+
 ```
 
 # References
@@ -143,9 +181,9 @@ end
 Performs  a  permutatorial  type  of  nonstandard  tensor  product  between  the
 operands, which are elements of the `OPS` `Tuple`,  keeping  the  indices  `FID`
 fixed in a `D`-dimensional Euclidean space, and returns  the  resulting  tensor.
-The permutatorial nonstandard tensor product performed is referred to by nesting
-the '⊛': Unicode U+229b symbol in some Lattice Boltzmann theory  literature,  as
-[1].
+The permutatorial nonstandard tensor product  performed  is  referred  to  by  a
+particular nesting of the '⊛': Unicode U+229b symbol in some  Lattice  Boltzmann
+theory literature, as [1].
 
 `OPS` is an NTuple containing the operand tensors, like `(δ, δ)`  —  a  pair  of
 Kronecker-delta tensors stored in the temporary `δ` identifier.
@@ -159,15 +197,33 @@ apply.
 
 # Usage
 
-    Calculate the `𝝙⁽ⁿ⁾` tensor of order `2n` that is isotropic with respect to  all
-    of its `2n` indices [1] with `n=2` through the nonstandard product
+Calculate the `𝝠⁽ⁿ⁾` orthogonality tensor of order `2n` through the  nonstandard
+product
 
-        Δ⁽²⁾αβγε = δαβ*δγε + δαγ*δβε + δαε*δβγ,
+    Δ⁽²⁾α₁α₂β₁β₂ = δα₁β₁*δα₂β₂ + δα₁β₂*δα₂β₁
 
-    in which terms combine the three free indices  `βγε`  while  keeping  the  first
-    index `α` fixed.
+in which terms permute the two free indices of the set `{β₁, β₂}` while  keeping
+the index set `{α₁α₂}` fixed.
 
 ```julia-repl
+julia> 𝕡((K(2), K(2)), (1, 3))
+2×2×2×2 Array{Int64,4}:
+[:, :, 1, 1] =
+ 2  0
+ 0  1
+
+[:, :, 2, 1] =
+ 0  1
+ 0  0
+
+[:, :, 1, 2] =
+ 0  0
+ 1  0
+
+[:, :, 2, 2] =
+ 1  0
+ 0  2
+
 ```
 
 # References
@@ -209,6 +265,8 @@ end
 """
 # Description
 
+The function name is the Capital Greek Omicron Letter, Ο: U+39f.
+
     Ο(n::Int64; D::Int64 = 2)::Tensor{Int64} # Ο: U+39f
 
 Computes  and  returns  an  `n`-th  order  Orthogonality  Tensor   (of   `Int64`
@@ -216,10 +274,29 @@ components) in a `D`-dimensional Euclidean space, checking bounds on `D`,  i.e.,
 whether `D ∈ [1, 3]`, and on `n`, i.e., whether `n ∈ [0, ∞)`.
 
 ```julia-repl
-julia> Ο(1) # Ο: U+39f
-2×2 Array{Int64,2}:
- 1  0
+julia> Ο(1, D = 3) # Ο: U+39f
+3×3 Array{Int64,2}:
+ 1  0  0
+ 0  1  0
+ 0  0  1
+
+julia> Ο(2, D = 2) # Ο: U+39f
+2×2×2×2 Array{Int64,4}:
+[:, :, 1, 1] =
+ 2  0
  0  1
+
+[:, :, 2, 1] =
+ 0  1
+ 0  0
+
+[:, :, 1, 2] =
+ 0  0
+ 1  0
+
+[:, :, 2, 2] =
+ 1  0
+ 0  2
 
 ```
 """
@@ -236,7 +313,7 @@ function Ο(n::Int64; D::Int64 = 2)::Tensor{Int64} # Ο: U+39f
         return 1
     else
         if n == 1
-            return δ[D]
+            return K(D)
         else
             return 𝕡(
                 Tuple(repeat([K(D)], n)),

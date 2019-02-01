@@ -176,12 +176,30 @@ apply.
 Calculate the `𝝠⁽ⁿ⁾` orthogonality tensor of order `2n` through the  nonstandard
 product
 
-    Δ⁽²⁾αβγε = δαβ*δγε + δαγ*δβε + δαε*δβγ,
+    Δ⁽²⁾α₁α₂β₁β₂ = δα₁β₁*δα₂β₂ + δα₁β₂*δα₂β₁
 
-in which terms combine the three free indices  `βγε`  while  keeping  the  first
-index `α` fixed.
+in which terms permute the two free indices of the set `{β₁, β₂}` while  keeping
+the index set `{α₁α₂}` fixed.
 
 ```julia-repl
+julia> 𝕡((K(2), K(2)), (1, 3))
+2×2×2×2 Array{Int64,4}:
+[:, :, 1, 1] =
+ 2  0
+ 0  1
+
+[:, :, 2, 1] =
+ 0  1
+ 0  0
+
+[:, :, 1, 2] =
+ 0  0
+ 1  0
+
+[:, :, 2, 2] =
+ 1  0
+ 0  2
+
 ```
 
 # References

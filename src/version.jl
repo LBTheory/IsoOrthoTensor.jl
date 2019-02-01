@@ -1,3 +1,3 @@
 # Version file
 
-version() = v"0.0.1"
+version() = v"0.1.0"

@@ -173,13 +173,13 @@ apply.
 
 # Usage
 
-    Calculate the `𝝙⁽ⁿ⁾` tensor of order `2n` that is isotropic with respect to  all
-    of its `2n` indices [1] with `n=2` through the nonstandard product
+Calculate the `𝝠⁽ⁿ⁾` orthogonality tensor of order `2n` through the  nonstandard
+product
 
-        Δ⁽²⁾αβγε = δαβ*δγε + δαγ*δβε + δαε*δβγ,
+    Δ⁽²⁾αβγε = δαβ*δγε + δαγ*δβε + δαε*δβγ,
 
-    in which terms combine the three free indices  `βγε`  while  keeping  the  first
-    index `α` fixed.
+in which terms combine the three free indices  `βγε`  while  keeping  the  first
+index `α` fixed.
 
 ```julia-repl
 ```

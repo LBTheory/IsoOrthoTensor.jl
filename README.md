@@ -64,13 +64,13 @@ Obtaining Orthogonality Tensors of order  `n`  (rank  `2n`)  in  `D`-dimensional
 Euclidean spaces:
 
 ```julia-repl
-julia> Ο(1, D = 3)
+julia> Ο(1, D = 3) # Ο: U+39f
 3×3 Array{Int64,2}:
  1  0  0
  0  1  0
  0  0  1
 
-julia> Ο(2, D = 2)
+julia> Ο(2, D = 2) # Ο: U+39f
 2×2×2×2 Array{Int64,4}:
 [:, :, 1, 1] =
  2  0
@@ -111,17 +111,32 @@ ranks 12 and 14, respectively) in a 2-D Euclidean space (the default), each  one
 having 2¹² and 2¹⁴ components, respectively:
 
 ```julia-repl
-julia> @time Set(Δ(6))
+julia> @time Set(Δ(6)) # Δ: U+394
   1.737888 seconds (9.07 M allocations: 618.298 MiB, 4.91% gc time)
 Set([945, 315, 0, 10395, 225])
 
-julia> @time Set(Δ(7))
+julia> @time Set(Δ(7)) # Δ: U+394
   7.372711 seconds (43.81 M allocations: 3.272 GiB, 5.64% gc time)
 Set([0, 2835, 135135, 10395, 1575])
 
 ```
 
-A similar comparison is made for the Orthogonality tensor:
+A similar comparison is made for the Orthogonality tensor. A call to `Ο(n)` will
+ensue in a summation of `n!` tensor products with `n` operands each.
+
+```julia-repl
+julia> @time Set(Ο(5)) # Ο: U+39f
+  1.392121 seconds (12.24 M allocations: 812.973 MiB, 9.70% gc time)
+Set([120, 0, 12, 24])
+
+julia> @time Set(Ο(6)) # Ο: U+39f
+ 35.093839 seconds (301.58 M allocations: 20.094 GiB, 9.48% gc time)
+Set([720, 120, 36, 0, 48])
+
+```
+
+There isn't any hardcoded upper limit for the value of `n` accepted by `Δ()` and
+by `Ο()`, so bear in mind the overwhelmingly high algorithm complexity.
 
 # References
 

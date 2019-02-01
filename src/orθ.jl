@@ -57,8 +57,8 @@ export i𝕡, 𝕡, Ο, O
 
 Returns a one-dimensional array with tensor index permutations (as NTuples) that
 encode summation terms for a permutatorial type of nonstandard  tensor  product,
-referred to by a  nesting  the  '⊛':  Unicode  U+229b  symbol  in  some  Lattice
-Boltzmann theory literature, as [1].
+referred to by a particular nesting of the '⊛': Unicode U+229b  symbol  in  some
+Lattice Boltzmann theory literature, as [1].
 
 `OPD` is an NTuple containing the operand dimensions, like (2, 2),  and  has  as
 many elements as there are operands in the  permutatorial  type  of  nonstandard
@@ -80,6 +80,11 @@ function — a summation of `2! = 2` products between the operands:
 ```julia-repl
 julia> using IsoOrthoTensor
 
+julia> i𝕡((2, 2), (1, 3))
+2-element Array{Tuple{Vararg{Int64,N}} where N,1}:
+ (1, 2, 3, 4)
+ (1, 4, 3, 2)
+
 ```
 
 Nonstandard permutatorial tensor product between three rank-2  tensors,  keeping
@@ -87,6 +92,15 @@ the first index of each one fixed: arguments `(2, 2, 2)` and `(1, 3, 5)` to  the
 `i𝕡` function — a summation of `3! = 6` products between the operands:
 
 ```julia-repl
+julia> i𝕡((2, 2, 2), (1, 3, 5))
+6-element Array{Tuple{Vararg{Int64,N}} where N,1}:
+ (1, 2, 3, 4, 5, 6)
+ (1, 2, 3, 6, 5, 4)
+ (1, 4, 3, 2, 5, 6)
+ (1, 4, 3, 6, 5, 2)
+ (1, 6, 3, 2, 5, 4)
+ (1, 6, 3, 4, 5, 2)
+
 ```
 
 # References

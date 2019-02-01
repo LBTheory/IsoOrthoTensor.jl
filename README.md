@@ -92,6 +92,37 @@ julia> Ο(2, D = 2)
 
 # 3. Performance
 
+The mathematical generalization of the Tensor definitions  (obtained  by  adding
+products of the Kronecker delta with either a combination of  a  permutation  of
+certain free indices across the operands)  can  be  expressed  in  a  short  and
+concise way, but is definitely not the most efficient algorithm.
+
+Therefore, although the function definitions that generate such  tensors  are  a
+few lines long, the resulting algorithm is of a high  (computation)  complexity,
+and might be optimized in future versions of the package.
+
+Getting a correctly working implementation was the chief goal of this  inceptive
+version.
+
+Examples:
+
+Notice the time increment from a 6-th order to a 7-th order Isotropy tensor  (of
+ranks 12 and 14, respectively) in a 2-D Euclidean space (the default), each  one
+having 2¹² and 2¹⁴ components, respectively:
+
+```julia-repl
+julia> @time Set(Δ(6))
+  1.737888 seconds (9.07 M allocations: 618.298 MiB, 4.91% gc time)
+Set([945, 315, 0, 10395, 225])
+
+julia> @time Set(Δ(7))
+  7.372711 seconds (43.81 M allocations: 3.272 GiB, 5.64% gc time)
+Set([0, 2835, 135135, 10395, 1575])
+
+```
+
+A similar comparison is made for the Orthogonality tensor:
+
 # References
 
 [1]: K. K.  Mattila,  L.  A.  Hegele  Júnior,  P.  C.  Philippi,  “High-Accuracy

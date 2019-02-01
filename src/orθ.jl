@@ -157,9 +157,9 @@ end
 Performs  a  permutatorial  type  of  nonstandard  tensor  product  between  the
 operands, which are elements of the `OPS` `Tuple`,  keeping  the  indices  `FID`
 fixed in a `D`-dimensional Euclidean space, and returns  the  resulting  tensor.
-The permutatorial nonstandard tensor product performed is referred to by nesting
-the '⊛': Unicode U+229b symbol in some Lattice Boltzmann theory  literature,  as
-[1].
+The permutatorial nonstandard tensor product  performed  is  referred  to  by  a
+particular nesting of the '⊛': Unicode U+229b symbol in some  Lattice  Boltzmann
+theory literature, as [1].
 
 `OPS` is an NTuple containing the operand tensors, like `(δ, δ)`  —  a  pair  of
 Kronecker-delta tensors stored in the temporary `δ` identifier.
